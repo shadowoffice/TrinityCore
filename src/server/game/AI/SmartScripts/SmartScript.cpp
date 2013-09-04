@@ -2507,8 +2507,15 @@ ObjectList* SmartScript::GetTargets(SmartScriptHolder const& e, Unit* invoker /*
         case SMART_TARGET_OWNER_OR_SUMMONER:
         {
             if (me)
+            {
+                uint64 charmerOrOwnerGuid = me->GetCharmerOrOwnerGUID();
+
+                if (!charmerOrOwnerGuid)
+                    charmerOrOwnerGuid = me->GetCreatorGUID();
+
                 if (Unit* owner = ObjectAccessor::GetUnit(*me, me->GetCharmerOrOwnerGUID()))
                     l->push_back(owner);
+            }
             break;
         }
         case SMART_TARGET_THREAT_LIST:
